@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +8,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Winky+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="shortcut icon" href="../MainPage/static/TrackifylogoNobackground.png" type="image/x-icon">
+  
   <style>
+    
     body {
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       background-color: #111827 !important; /* Tailwind bg-gray-900 */
@@ -28,7 +30,7 @@
     }
     .badge {
       transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 25px 24px rgba(0, 0, 0, 0.2);
     }
     .badge:hover {
       transform: scale(1.1);
@@ -224,6 +226,7 @@
     #add-habit-btn {
       width: 100%;
     }
+
   </style>
 </head>
 <body class="bg-gray-100">
@@ -235,7 +238,7 @@
           <div class="menu-icon" onclick="collapseSidebar()">
             <i class="fas fa-bars text-gray-600 text-xl"></i>
           </div>
-          <img alt="Logo" class="mr-3 ml-3 logo" src="https://placehold.co/40x40"/>
+          <img  src="/XpandLevels/images/Trackifylogo.png" class="mr-3 ml-3 logo" style="width: 50px; height: 50px;" src="/images/Trackifylogo.png"/>
           <span class="text-xl font-semibold text-blue-600 nav-text">Habit Tracker</span>
         </div>
       </div>
@@ -266,7 +269,7 @@
     <div class="w-4/5 p-8 main-content" id="main-content">
       <div class="flex justify-between items-center mb-8">
         <div>
-          <p class="text-gray-600">Hi <span id="username">User</span>,</p>
+          <p class="text-gray-600">Hi <span id="username"><?php echo htmlspecialchars($user_id); ?></span>,</p>
           <h1 class="text-2xl font-semibold">Welcome to Your XP & Levels</h1>
         </div>
         <div class="flex items-center space-x-4">
@@ -275,7 +278,6 @@
             <span id="notification-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
           </div>
           <div class="relative badge">
-            <img alt="User Avatar" class="rounded-full" src="https://placehold.co/40x40" id="user-avatar"/>
             <span class="absolute bottom-0 right-0 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded-full" id="user-rank">#1</span>
           </div>
           <input class="px-4 py-2 rounded-lg bg-gray-200" placeholder="Search" type="text"/>
@@ -283,16 +285,16 @@
       </div>
       <div class="bg-white p-6 rounded-lg shadow-lg mb-8 card" id="profile-card">
         <div class="flex items-center space-x-4 w-full">
-          <img alt="Profile picture" class="rounded-full w-24 h-24" src="https://placehold.co/100x100?text=User" id="profile-image"/>
+          <img alt="Profile picture" class="rounded-full w-24 h-24" src="/XpandLevels/images/profile.jpg" id="profile-image"/>
           <div>
-            <h2 class="text-2xl font-semibold" id="profile-username">User Name</h2>
+            <h2 class="text-2xl font-semibold" id="profile-username">John doe</h2>
             <p class="text-gray-600">User ID: <span id="user-id">12345</span></p>
             <p class="text-gray-600">Current Level: <span id="current-level">5</span></p>
             <p class="text-gray-600">Total XP: <span id="total-xp">1250</span></p>
             <p class="text-gray-600">XP Needed for Next Level: <span id="xp-needed">250</span></p>
           </div>
           <div class="ml-auto relative badge" id="current-badge-container">
-            <img alt="Current badge" class="w-16 h-16" src="https://placehold.co/100x100?text=Badge" id="current-badge"/>
+            <img  style="height: 120px; width: 120px; " src="/XpandLevels/images/rank.png" id="current-badge"/>
           </div>
         </div>
       </div>
@@ -370,19 +372,19 @@
             <div class="flex items-center justify-between mb-2">
               <p class="text-lg">First Habit Completed</p>
               <div class="relative w-10 h-10 badge">
-                <img alt="Achievement badge" src="https://placehold.co/100x100?text=1st" id="first-habit-badge"/>
+                <img alt="Achievement badge" src="/XpandLevels/images/habit.png" id="first-habit-badge"/>
               </div>
             </div>
             <div class="flex items-center justify-between mb-2">
               <p class="text-lg">7-Day Streak</p>
               <div class="relative w-10 h-10 badge">
-                <img alt="Achievement badge" src="https://placehold.co/100x100?text=7d" id="streak-badge"/>
+                <img alt="Achievement badge" src="/XpandLevels/images/streak.png" id="streak-badge"/>
               </div>
             </div>
             <div class="flex items-center justify-between">
               <p class="text-lg">Level 5 Reached</p>
               <div class="relative w-10 h-10 badge">
-                <img alt="Achievement badge" src="https://placehold.co/100x100?text=Lvl5" id="level5-badge"/>
+                <img alt="Achievement badge" src="/XpandLevels/images/level.png" id="level5-badge"/>
               </div>
             </div>
           </div>
@@ -391,12 +393,11 @@
     </div>
   </div>
 
-  <!-- Level Up Notification -->
   <div id="level-up-notification" class="level-up-notification">
     <h2 class="text-2xl font-bold mb-2">Level Up!</h2>
     <p>Congratulations! You've reached level <span id="new-level">6</span>!</p>
     <div class="mt-4">
-      <img id="level-up-badge" src="https://placehold.co/100x100?text=NewBadge" alt="New badge" class="w-24 h-24 mx-auto">
+      <img id="level-up-badge"  style="height: 100px; width: 120px;" src="/XpandLevels/images/rank.png" alt="New badge" >
     </div>
     <button id="close-notification" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg">Continue</button>
   </div>
@@ -404,7 +405,8 @@
   <!-- Import Chart.js for visualizations -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script>
+  <script >
+    
     // XP and Level System
     const xpSystem = {
       // Configuration
@@ -422,13 +424,13 @@
           level10: "https://placehold.co/100x100?text=Lvl10",
           streak7: "https://placehold.co/100x100?text=7Day",
           streak30: "https://placehold.co/100x100?text=30Day",
-          firstHabit: "https://placehold.co/100x100?text=1stHabit"
+          firstHabit: "/XpandLevels/images/rank.png"
         }
       },
 
       // User data
       userData: {
-        username: "User Name",
+        username: "John Doe",
         userId: "12345",
         totalXp: 1250,
         level: 5,
@@ -489,7 +491,7 @@
       updateUI() {
         // Update profile information
         document.getElementById('username').textContent = this.userData.username;
-        document.getElementById('profile-username').textContent = this.userData.username;
+        document.getElementById('profile-username').textContent ="John Doe";
         document.getElementById('user-id').textContent = this.userData.userId;
         document.getElementById('current-level').textContent = this.userData.level;
         document.getElementById('total-xp').textContent = this.userData.totalXp;
@@ -1096,6 +1098,7 @@
       document.getElementById('main-content').classList.toggle('expanded');
       document.getElementById('profile-card').classList.toggle('expanded');
     }
+
   </script>
 </body>
 </html>
