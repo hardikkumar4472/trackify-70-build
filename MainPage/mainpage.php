@@ -75,16 +75,18 @@
             <h2 class="text-2xl font-bold text-blue-600 mb-6 font-abril-fatface">Features We Provide</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 fade-in">
                 <div class="h-300 bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
-                <a href="../ToDoList/todolist.html">
+                <a href="../ToDoList/todolist.php">
                     <img alt="BMI icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="static/Habitlist.png" width="60"/>
                     <h3 class="text-xl font-semibold text-orange-500 mb-2">Customizable Habit Lists</h3>
                     <p class="text-green-400">Users can create and manage their own habits.</p>
                 </a>
                 </div>
                 <div class="bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
+                <a href="../DailyStreak/routine.php">
                     <img alt="Food Recommendation icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="static/Streak.png" width="60"/>
                     <h3 class="text-xl font-semibold text-orange-500 mb-2">Daily/Weekly Streaks</h3>
                     <p class="text-green-400">Encourages consistency with streak-based rewards.</p>
+                </a>
                 </div>
                 <!-- <div class="bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
                     <img alt="Nutritional Value icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="static/Progressvis.png" width="60"/>
@@ -92,7 +94,7 @@
                     <p class="text-green-400">Charts, graphs, or a calendar to track progress.</p>
                 </div> -->
                 <div class="bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
-                <a href="../NotificationAndReminder/notificationsandremainder.html">
+                <a href="../NotificationAndReminder/notificationsandremainder.php">
                     <img alt="Interactive Chatbot icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="static/notification.png" width="60"/>
                     <h3 class="text-xl font-semibold text-orange-500 mb-2">Reminders & Notifications</h3>
                     <p class="text-green-400">Timely alerts to keep users accountable.</p>
@@ -104,9 +106,11 @@
                     <p class="text-green-400">Surprise bonuses for streaks or achievements.</p>
                 </div> -->
                 <div class="bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
+                    <a href="../ChallengesAndQuotes/ChallengesAndQuotes.php">
                     <img alt="Challenges icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="static/challenges.png" width="60"/>
                     <h3 class="text-xl font-semibold text-orange-500 mb-2">Challenges & Quests</h3>
                     <p class="text-green-400">Set personal or group challenges to increase motivation.</p>
+                    </a>
                 </div>
                 <div class="bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
                 <a href="../XpandLevels/xpandlevels.html">
