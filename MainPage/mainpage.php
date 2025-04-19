@@ -1,3 +1,19 @@
+<?php
+session_start(); 
+if (!isset($_SESSION['user_firstname'])) {
+    header("Location: ../login.php");
+    exit();
+}
+
+if (isset($_GET['logout'])) {
+    session_destroy(); 
+    header("Location: ../index.php"); 
+    exit();
+}
+
+$user_email = $_SESSION['user_firstname'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,22 +27,23 @@
     <link rel="shortcut icon" href="static/TrackifylogoNobackground.png" type="image/x-icon">
 </head>
 <body class="bg-gray-900" id="home">
-    <header id="header" class=" sticky top-0 z-50">
+    <header id="header" class="sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <img alt="Trackify logo" class="w-10 h-15 border-blue-600" src="static/TrackifylogoNobackground.png"10"/>
+                <img alt="Trackify logo" class="w-10 h-15 border-blue-600" src="static/TrackifylogoNobackground.png"/>
                 <span id=tt class="text-2xl font-extrabold text-blue-600 tracking-wide font-abril-fatface">Trackify</span>
             </div>
             <nav class="hidden md:flex space-x-2">
                 <button class="px-4 py-2 text-white border border-white rounded-full hover:bg-white hover:text-black transition duration-2000 transform hover:scale-105"><a href="#home">Home</a></button>
                 <button class="px-4 py-2 text-white border border-white rounded-full hover:bg-white hover:text-black transition duration-2000 transform hover:scale-105"><a href="#features">Features</a></button>
-                <button class="px-4 py-2 text-white border border-white rounded-full hover:bg-white hover:text-black transition duration-2000 transform hover:scale-105"><a href="#topics">topics</a></button>
+                <button class="px-4 py-2 text-white border border-white rounded-full hover:bg-white hover:text-black transition duration-2000 transform hover:scale-105"><a href="#topics">Topics</a></button>
                 <button class="px-4 py-2 text-white border border-white rounded-full hover:bg-white hover:text-black transition duration-2000 transform hover:scale-105"><a href="../Aboutus/AboutUS.php">About us</a></button>
                 <button class="px-4 py-2 text-white border border-white rounded-full hover:bg-white hover:text-black transition duration-2000 transform hover:scale-105"><a href="../Contactus/Contactus.html">Contact us</a></button>
             </nav>
             <div class="space-x-4 flex items-center">
+                <span class="text-white">Welcome, <?php echo htmlspecialchars($user_email); ?></span>
                 <button class="px-4 py-2 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition duration-2000 transform hover:scale-105"><a href="https://trackify-assistant.onrender.com/">TrackifyAI</a></button>
-                <button class="px-4 py-2 text-white bg-blue-600 rounded-full hover:bg-gray-700 transition duration-2000 transform hover:scale-105"><a href="../index.php">Logout</a></button>
+                <button class="px-4 py-2 text-white bg-blue-600 rounded-full hover:bg-gray-700 transition duration-2000 transform hover:scale-105"><a href="?logout=true">Logout</a></button>
                 <button id="mobile-menu-button" class="md:hidden px-4 py-2 text-gray-700 hover:text-blue-600 transition duration-2000">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -88,11 +105,6 @@
                     <p class="text-green-400">Encourages consistency with streak-based rewards.</p>
                 </a>
                 </div>
-                <!-- <div class="bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
-                    <img alt="Nutritional Value icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="static/Progressvis.png" width="60"/>
-                    <h3 class="text-xl font-semibold text-orange-500 mb-2">Progress Visualization</h3>
-                    <p class="text-green-400">Charts, graphs, or a calendar to track progress.</p>
-                </div> -->
                 <div class="bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
                 <a href="../NotificationAndReminder/notificationsandremainder.php">
                     <img alt="Interactive Chatbot icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="static/notification.png" width="60"/>
@@ -100,11 +112,6 @@
                     <p class="text-green-400">Timely alerts to keep users accountable.</p>
                 </a>
                 </div>
-                <!-- <div class="bg-black p-6 transition-colors fade-in duration-400 ease-in-out rounded-[20px] border-2 border-amber-400 cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
-                    <img alt="Loot Boxes icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="lootboxes.png" width="60"/>
-                    <h3 class="text-xl font-semibold text-orange-500 mb-2">Random Rewards (Loot Boxes)</h3>
-                    <p class="text-green-400">Surprise bonuses for streaks or achievements.</p>
-                </div> -->
                 <div class="bg-gray-600 p-6 transition-colors fade-in duration-400 ease-in-out rounded-[50px] border-2 border-white cursor-pointer hover:bg-gray-900 hover:rounded-[30px] hover:transition-transform hover:duration-500 hover:transform hover:scale-105">
                     <a href="../ChallengesAndQuotes/ChallengesAndQuotes.php">
                     <img alt="Challenges icon" class="mx-auto mb-4 transition-transform transform hover:scale-110" src="static/challenges.png" width="60"/>
@@ -128,7 +135,7 @@
         </section>
         <section class="mt-16 fade-in" id="topics">
             <h2 class="text-2xl font-bold text-blue-600 fade-in mb-6 font-abril-fatface">Help Topics</h2>
-            <h3 class="text-xl font-semibold text-white  mb-4 font-abril-fatface">Enhance Your Lifestyle</h3>
+            <h3 class="text-xl font-semibold text-white mb-4 font-abril-fatface">Enhance Your Lifestyle</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 <div class="cursor-pointer border-2 border-white bg-gray-600 p-5 rounded-[20px] shadow-md hover:bg-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-50 duration-2000 fade-in">
                     <img alt="Wake Up Early" class="w-full h-40 object-cover rounded-t-lg mb-4 transition-transform transform hover:scale-110" src="static/Wake.png" width="300"/>
@@ -150,7 +157,7 @@
                     <h4 class="text-lg font-semibold text-orange-500 mb-2">Practice Gratitude</h4>
                     <p class="text-green-400">Cultivate positivity by acknowledging what you're thankful for.</p>
                 </div>
-                <div class="cursor-pointer border-2 fade-in border-white bg-gray-600 p-5 rounded-[20px] shadow-md hover:bg-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-50 duration-2000 fade -in">
+                <div class="cursor-pointer border-2 fade-in border-white bg-gray-600 p-5 rounded-[20px] shadow-md hover:bg-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-50 duration-2000 fade-in">
                     <img alt="Set Daily Goals" class="w-full h-40 object-cover rounded-t-lg mb-4 transition-transform transform hover:scale-110" src="static/dailygoals.png" width="300"/>
                     <h4 class="text-lg font-semibold text-orange-500 mb-2">Set Daily Goals</h4>
                     <p class="text-green-400">Stay organized and motivated by planning your tasks.</p>
@@ -167,7 +174,7 @@
                 </div>
                 <div class="cursor-pointer border-2 fade-in border-white bg-gray-600 p-5 rounded-[20px] shadow-md hover:bg-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-50 duration-2000 fade-in">
                     <img alt="Stay Hydrated" class="w-full h-40 object-cover rounded-t-lg mb-4 transition-transform transform hover:scale-110" src="static/stayhydrated.png" width="300"/>
-                    <h4 class="text-lg font-semibold text-orange-500 mb-2">Stay Hydrated</h4>
+                    <h4 class="text -lg font-semibold text-orange-500 mb-2">Stay Hydrated</h4>
                     <p class="text-green-400">Drink enough water to maintain optimal health.</p>
                 </div>
                 <div class="cursor-pointer border-2 fade-in border-white bg-gray-600 p-5 rounded-[20px] shadow-md hover:bg-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-50 duration-2000 fade-in">
@@ -185,7 +192,7 @@
     </main>
     <footer class="bg-black py-8 mt-16 fade-in">
         <div class="container mx-auto px-4 fade-in">
-            <div class="flex flex-col md:flex-row justify-between items-center fade-in" >
+            <div class="flex flex-col md:flex-row justify-between items-center fade-in">
                 <div class="flex items-center space-x-2 mb-4 md:mb-0">
                     <img alt="Trackify logo" class="w-10 h-10" src="static/TrackifylogoNobackground.png" width="40"/>
                     <span class="text-xl font-bold text-blue-600">Trackify</span>
@@ -193,11 +200,11 @@
                 <div class="flex space-x-8 mb-4 md:mb-0 fade-in">
                     <div>
                         <h4 class="text-lg font-semibold text-blue-600 mb-2">Product</h4>
-                        <ul class="space ```html
-                        <li><a class="text-white hover:text-blue-600" href="#">Overview</a></li>
-                        <li><a class="text-white hover:text-blue-600" href="#">Features</a></li>
-                        <li><a class="text-white hover:text-blue-600" href="#">Solutions</a></li>
-                        <li><a class="text-white hover:text-blue-600" href="#">Pricing</a></li>
+                        <ul class="space-y-1">
+                            <li><a class="text-white hover:text-blue-600" href="#">Overview</a></li>
+                            <li><a class="text-white hover:text-blue-600" href="#">Features</a></li>
+                            <li><a class="text-white hover:text-blue-600" href="#">Solutions</a></li>
+                            <li><a class="text-white hover:text-blue-600" href="#">Pricing</a></li>
                         </ul>
                     </div>
                     <div>
@@ -235,34 +242,34 @@
     </footer>
     <script>
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
-    document.getElementById('mobile-menu').classList.remove('hidden');
-});
-
-document.getElementById('close-mobile-menu').addEventListener('click', function() {
-    document.getElementById('mobile-menu').classList.add('hidden');
-});
-document.addEventListener('DOMContentLoaded', function() {
-    const fadeElements = document.querySelectorAll('.fade-in');
-
-    const observerOptions = {
-        root: null, 
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); 
-            }
+            document.getElementById('mobile-menu').classList.remove('hidden');
         });
-    }, observerOptions);
 
-    fadeElements.forEach(element => {
-        observer.observe(element);
-    });
-});
+        document.getElementById('close-mobile-menu').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            const observerOptions = {
+                root: null, 
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
     </script>
 </body>
 </html>
