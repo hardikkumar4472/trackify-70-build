@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Mystery Box</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        .box {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            background: #F5E6CA;
+            border: 2px solid #6C8EBF;
+        }
+
+        .box:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 4px 15px rgba(108, 142, 191, 0.4);
+        }
+
+        .box.opened {
+            background: #D4A373;
+            border-color: #8B4513;
+            transform: rotateY(180deg);
+        }
+
+        .popup-card {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #F5E6CA;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1001;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .glow-text {
+            animation: text-glow 1.5s ease-in-out infinite alternate;
+        }
+
+        .glow-tile {
+            animation: tile-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 5px #F5E6CA, 0 0 10px #D4A373; }
+            100% { text-shadow: 0 0 10px #F5E6CA, 0 0 20px #D4A373; }
+        }
+
+        @keyframes tile-glow {
+            0% { box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(212, 163, 115, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
+        }
+
+        .reward-text {
+            display: none;
+            transform: rotateY(180deg);
+        }
+
+        .box.opened .reward-text {
+            display: block;
+        }
+
+        .box.opened .question-mark {
+            display: none;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="bg-[#213448] min-h-screen flex flex-col items-center justify-center p-4 font-sans">
+    <div class="text-center mb-12">
+        <h1 class="text-5xl font-bold text-[#F5E6CA] mb-4 glow-text">
+            Habit Chest
+        </h1>
+        <p class="text-[#D4A373] text-lg italic">Unlock daily rewards for your progress</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 mb-12" id="grid">
+        
+    </div>
+
+    <div class="overlay"></div>
+    <div class="popup-card glow-tile">
+        <h3 class="text-2xl font-bold text-[#4B3621] mb-4">🎉 You Earned!</h3>
+        <p class="reward-text-popup text-[#6C8EBF] text-xl mb-6"></p>
+        <button onclick="closePopup()" class="bg-[#8B4513] text-white px-6 py-2 rounded-full hover:bg-[#6C8EBF] transition">
+            Close
+        </button>
+    </div>
+
+    <script>
+        let matchesFound = [];
+
+        function triggerConfetti() {
+            var duration = 2000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#FF69B4', '#4B0082', '#00FF00']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#FFD700', '#FF0000', '#00BFFF']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+
+            confetti({
+                particleCount: 100,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#FFA500', '#FFFF00', '#008000'],
+                decay: 0.9
+            });
+        }
+
+        function showPopup(reward) {
+            document.querySelector('.overlay').style.display = 'block';
+            document.querySelector('.popup-card').style.display = 'block';
+            document.querySelector('.reward-text-popup').textContent = reward;
+        }
+
+        function closePopup() {
+            document.querySelector('.overlay').style.display = 'none';
+            document.querySelector('.popup-card').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const rewards = [
+                "Streak Shield", "Daily Spark", "Progress Star",
+                "Bonus Points", "Mystery Multiplier", "Theme Unlock",
+                "Checkmark Pack", "Daily Surprise", "Habit Buddy"
+            ];
+
+            const grid = document.getElementById('grid');
+            const boxes = [];
+            const gridSize = 3;
+
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                const box = document.createElement('div');
+                const reward = rewards[Math.floor(Math.random() * rewards.length)];
+                box.className = 'box w-32 h-32 rounded-lg flex items-center justify-center cursor-pointer relative';
+                box.dataset.reward = reward;
+                box.innerHTML = `
+                    <span class="question-mark text-4xl text-[#6C8EBF] font-serif glow-text">?</span>
+                    <span class="reward-text text-[#4B3621] font-bold text-center px-2 glow-text">${reward}</span>
+                `;
+
+                box.addEventListener('click', function () {
+                    if (!box.classList.contains('opened')) {
+                        box.classList.add('opened');
+                        showPopup(reward);
+                        triggerConfetti();
+                        checkForMatches();
+                    }
+                });
+
+                grid.appendChild(box);
+                boxes.push(box);
+            }
+
+            function checkForMatches() {
+                const winningCombos = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                    [0, 4, 8], [2, 4, 6]
+                ];
+
+                for (const combo of winningCombos) {
+                    const [a, b, c] = combo;
+                    if (isMatching(boxes[a], boxes[b], boxes[c]) && !matchesFound.includes(combo.toString())) {
+                        matchesFound.push(combo.toString());
+                        revealBoxes([boxes[a], boxes[b], boxes[c]]);
+                        return;
+                    }
+                }
+            }
+
+            function isMatching(box1, box2, box3) {
+                return (
+                    box1.dataset.reward === box2.dataset.reward &&
+                    box2.dataset.reward === box3.dataset.reward &&
+                    box1.classList.contains('opened') &&
+                    box2.classList.contains('opened') &&
+                    box3.classList.contains('opened')
+                );
+            }
+
+            function revealBoxes(matchingBoxes) {
+                matchingBoxes.forEach(box => {
+                    box.style.background = '#8B4513';
+                    box.style.borderColor = '#D4A373';
+                    box.classList.add('glow-tile');
+                });
+                alert(`🏆 Triple Match! You won 3 ${matchingBoxes[0].dataset.reward} rewards!`);
+            }
+        });
+    </script>
+</body>
+</html>
