@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        }
+        
+        .card-glow:hover {
+            animation: glow 2s infinite;
+        }
+        
+        .nutrition-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .nutrition-card:hover .nutrition-icon {
+            transform: scale(1.1);
+        }
+        
+        .alternative-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(7, 0, 22, 0.89), 0 4px 6px -2px rgba(6, 1, 27, 0.911);
+        }
+        .font-abril {
+        font-family: 'Abril Fatface', cursive;
+  }
+        
+
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#111828] via-[#2a0a1e] to bg-blue-900 p-5 h-full flex items-center justify-center font-sans">
+    <div class="bg-blue-00 max-w-7xl w-full rounded-2xl shadow-2xl p-6 transition-all duration-300 card-glow">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8 border-b border-blue-200 pb-4">
+            <div class="flex items-center">
+                <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+                <div class="text-blue-600 text-2xl font-extrabold tracking-tight">Trackify</div>
+            </div>
+            <div class="flex space-x-4">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-300 flex items-center shadow-md">
+                    
+                </button>
+            </div>
+        </header>
+
+        <div class="flex gap-6 flex-col md:flex-row">
+            <div class="rounded-xl overflow-hidden md:w-1/2 w-full group relative shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                <img src="../Exercise/picture/jogging.jpg" alt="Jogging" class="w-full h-full object-cover">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <span class="text-white  text-lg font-abril">Exercise Demo</span>
+                </div>
+            </div>
+
+            <div class="flex-1 border border-gray-200 rounded-xl p-6 bg-gray-300 shadow-lg w-full">
+                
+                <div class="flex items-center gap-2 mb-4">
+                    <h2 class="text-xl text-green-600 font-abril">Jogging</h2>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Beginner</span>
+                </div>
+
+                <div class="text-gray-600 text-[14px] mb-5 font-bold block border border-gray-300 rounded-xl p-4 leading-relaxed shadow-md 
+                transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-blue-500 hover:bg-blue-50 cursor-pointer">
+                    <h3 class="text-blue-700 mb-2 font-abril">How to Do a Basic Jogging:</h3>
+                    <ol class="space-y-2 list-decimal pl-5">
+                        <li>Walk briskly or do light stretches for 3–5 minutes to get your body ready.</li>
+                        <li>Keep a gentle bounce in your stride, land softly on your midfoot, and swing your arms naturally.</li>
+                        <li>Inhale through your nose, exhale through your mouth. Try a 2:2 rhythm (2 steps inhale, 2 steps exhale).</li>
+                    </ol>
+                </div>
+                
+                <div class="bg-blue-50 rounded-xl p-4 mb-6 border border-blue-200">
+                    <h3 class="text-blue-700 mb-2 font-abril">Benefits:</h3>
+                    <ul class="space-y-1 grid grid-cols-2 rows-2">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Boosts Cardiovascular Health</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Improves Mental Health</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Builds Muscular Endurance</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i> Enhances Sleep Quality</li>
+                    </ul>
+                </div>
+
+                <!-- Nutrition Facts with improved styling -->
+                <h3 class="font-bold text-blue-700 mb-3 font-abril">Daily Nutrition Facts</h3>
+                <div class="flex justify-between mb-8 bg-gray-50 p-4 rounded-xl">
+                    <div class="nutrition-card transition-all duration-300 hover:bg-blue-50 p-3 rounded-lg">
+                        <div class="w-16 h-16 bg-yellow-400 rounded-xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-md nutrition-icon">
+                            <i class="fas fa-drumstick-bite text-yellow-800"></i>
+                        </div>
+                        <div class="text-sm font-bold text-center text-gray-800">Proteins</div>
+                        <div class="text-blue-600 text-lg font-bold text-center">24g</div>
+                    </div>
+                    
+                    <div class="nutrition-card transition-all duration-300 hover:bg-blue-50 p-3 rounded-lg">
+                        <div class="w-16 h-16 bg-pink-500 rounded-xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-md nutrition-icon">
+                            <i class="fas fa-oil-can text-pink-800"></i>
+                        </div>
+                        <div class="text-sm font-bold text-center text-gray-800">Fats</div>
+                        <div class="text-blue-600 text-lg font-bold text-center">54.3g</div>
+                    </div>
+                    
+                    <div class="nutrition-card transition-all duration-300 hover:bg-blue-50 p-3 rounded-lg">
+                        <div class="w-16 h-16 bg-green-400 rounded-xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-md nutrition-icon">
+                            <i class="fas fa-bread-slice text-green-800"></i>
+                        </div>
+                        <div class="text-sm font-bold text-center text-gray-800">Carbohydrates</div>
+                        <div class="text-blue-600 text-lg font-bold text-center">132g</div>
+                    </div>
+                </div>
+
+                
+                <div>
+                    <h3 class="font-bold text-blue-700 mb-3 font-abril">Alternatives you can try</h3>
+                    <div class="flex gap-3 overflow-x-auto pb-2">
+                        <div class="min-w-[120px] text-center alternative-card bg-gray-50 p-3 rounded-lg transition-all duration-300">
+                            <div class="w-20 h-20 rounded-lg overflow-hidden mb-2 shadow-md mx-auto">
+                                <img src="../Exercise/picture/muscles.jpg" alt="Alternative 1" class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-gray-800 font-medium"><a href="pushup.html">Pushup</a></div>
+                        </div>
+                        
+                        <div class="min-w-[120px] text-center alternative-card bg-gray-50 p-3 rounded-lg transition-all duration-300">
+                            <div class="w-20 h-20 rounded-lg overflow-hidden mb-2 shadow-md mx-auto">
+                                <img src="../Exercise/picture/jumpingjacks.jpg" alt="Alternative 2" class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-gray-800 font-medium"><a href="jumpingjack.html">Jumping Jacks</a></div>
+                        </div>
+                        
+                        <div class="min-w-[120px] text-center alternative-card bg-gray-50 p-3 rounded-lg transition-all duration-300">
+                            <div class="w-20 h-20 rounded-lg overflow-hidden mb-2 shadow-md mx-auto">
+                                <img src="../Exercise/picture/plank3.jpg" alt="Alternative 3" class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-gray-800 font-medium"><a href="plank.html">Plank</a></div>
+                        </div>
+                        <div class="min-w-[120px] text-center alternative-card bg-gray-50 p-3 rounded-lg transition-all duration-300">
+                            <div class="w-20 h-20 rounded-lg overflow-hidden mb-2 shadow-md mx-auto">
+                                <img src="../Exercise/picture/pulups1.webp" alt="Alternative 3" class="w-full h-full object-cover">
+                            </div>
+                            <div class="text-gray-800 font-medium"><a href="pullup.html">Pull-ups</a></div>
+                            
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
