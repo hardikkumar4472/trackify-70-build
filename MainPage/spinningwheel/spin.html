@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mystic Wheel of Fortune</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: radial-gradient(circle at center, #050b24 0%, #091133 70%, #0b214a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+       
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 80px 40px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 120px 80px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 160px 20px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 200px 60px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 240px 90px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 280px 50px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 320px 30px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 360px 70px, white, rgba(0,0,0,0));
+            background-size: 400px 600px;
+            animation: twinkle 5s infinite;
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        
+        .wrapper {
+            width: 90%;
+            max-width: 34.37em;
+            max-height: 90vh;
+            background: rgba(30, 35, 90, 0.7);
+            backdrop-filter: blur(10px);
+            position: relative;
+            padding: 3em;
+            border-radius: 1em;
+            box-shadow: 0 0 30px rgba(8, 61, 83, 0.5),
+                        0 0 60px rgba(31, 79, 162, 0.3),
+                        inset 0 0 10px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            border: 1px solid rgba(31, 79, 162, 0.5);
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .wrapper:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(31, 79, 162, 0.7),
+                        0 0 80px rgba(31, 79, 162, 0.4),
+                        inset 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #wheel {
+            max-height: inherit;
+            width: inherit;
+            margin: 0 auto;
+            filter: drop-shadow(0 0 10px rgba(31, 79, 162, 0.7));
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #spin-btn {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            height: 26%;
+            width: 26%;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            background: radial-gradient(circle, #1f4e7b 0%, #14324a 100%);
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 1.8em;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            box-shadow: 0 0 20px rgba(31, 79, 162, 0.8),
+                        inset 0 0 10px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        #spin-btn:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 0 30px rgba(31, 79, 162, 1),
+                        inset 0 0 15px rgba(255, 255, 255, 0.4);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+
+        #spin-btn:active {
+            transform: translate(-50%, -50%) scale(0.98);
+        }
+
+        .arrow {
+            position: absolute;
+            width: 4em;
+            height: 4em;
+            top: 45%;
+            right: -2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7));
+        }
+
+        .arrow::before {
+            content: "";
+            width: 0;
+            height: 0;
+            border-top: 1em solid transparent;
+            border-bottom: 1em solid transparent;
+            border-right: 2em solid gold;
+            transform: rotate(180deg);
+        }
+
+        #final-value {
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 1.5em;
+            color: #e1bee7;
+            font-weight: 500;
+            text-shadow: 0 0 10px rgba(31, 79, 162, 0.7);
+        }
+
+        .title {
+            font-size: 2.5em;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5em;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(31, 79, 162, 0.7),
+                         0 0 20px rgba(31, 79, 162, 0.5);
+            position: relative;
+        }
+
+        .title::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #1f4e7b, transparent);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+       
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 5, 36, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-card {
+            background: linear-gradient(135deg, rgba(20, 46, 85, 0.95) 0%, rgba(15, 30, 60, 0.95) 100%);
+            border-radius: 1em;
+            padding: 2.5em;
+            width: 90%;
+            max-width: 25em;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(31, 79, 162, 0.7),
+                        inset 0 0 10px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(31, 79, 162, 0.5);
+            transform: scale(0.7);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        opacity 0.4s ease,
+                        box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 45%,
+                rgba(31, 79, 162, 0.3) 50%,
+                transparent 55%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        .popup-overlay.active .popup-card {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 0.8em;
+            right: 0.8em;
+            font-size: 1.5em;
+            color: #e1bee7;
+            cursor: pointer;
+            width: 1.5em;
+            height: 1.5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .popup-close:hover {
+            color: #fff;
+            transform: rotate(90deg);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+
+        .popup-icon {
+            font-size: 4em;
+            color: #ffd700;
+            margin-bottom: 0.3em;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .popup-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 0.5em;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .popup-reward {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5em;
+            text-shadow: 0 0 15px rgba(31, 79, 162, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .popup-description {
+            font-size: 1em;
+            color: #e1bee7;
+            margin-bottom: 1.5em;
+            line-height: 1.6;
+        }
+
+        .popup-button {
+            background: linear-gradient(135deg, #1f4e7b 0%, #14324a 100%);
+            color: #fff;
+            border: none;
+            padding: 0.8em 2em;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(31, 79, 162, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(31, 79, 162, 0.8);
+        }
+
+        .popup-button:active {
+            transform: translateY(0);
+        }
+
+        .popup-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .popup-button:hover::before {
+            left: 100%;
+        }
+
+        @keyframes tada {
+            0% { transform: scale(1); }
+            10%, 20% { transform: scale(0.9) rotate(-3deg); }
+            30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+            40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        .tada {
+            animation: tada 1s;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @media screen and (max-width: 768px) {
+            .wrapper {
+                font-size: 12px;
+                padding: 2em;
+            }
+
+            .arrow {
+                right: -1.5em;
+            }
+
+            #spin-btn {
+                height: 30%;
+                width: 30%;
+                font-size: 1.5em;
+            }
+
+            .title {
+                font-size: 2em;
+            }
+
+            .popup-card {
+                padding: 1.5em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1 class="title">Mystic Wheel</h1>
+        <div class="container">
+            <canvas id="wheel"></canvas>
+            <button id="spin-btn">Spin</button>
+            <div class="arrow"></div>
+        </div>
+        <div id="final-value">
+            <p>Click On The Spin Button To Start</p>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="rewardPopup">
+        <div class="popup-card">
+            <div class="popup-close" id="popupClose">×</div>
+            <div class="popup-icon">🎉</div>
+            <h2 class="popup-title">Congratulations!</h2>
+            <p class="popup-reward" id="popupReward">Reward Name</p>
+            <p class="popup-description" id="popupDescription">Description of the reward will appear here.</p>
+            <button class="popup-button" id="claimButton">Claim Reward</button>
+        </div>
+    </div>
+
+   
+    <canvas id="confetti-canvas"></canvas>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"></script>
+
+    <script>
+        const wheel = document.getElementById("wheel");
+        const spinBtn = document.getElementById("spin-btn");
+        const finalValue = document.getElementById("final-value");
+        const popup = document.getElementById("rewardPopup");
+        const popupClose = document.getElementById("popupClose");
+        const popupReward = document.getElementById("popupReward");
+        const popupDescription = document.getElementById("popupDescription");
+        const claimButton = document.getElementById("claimButton");
+        const confettiCanvas = document.getElementById("confetti-canvas");
+        const ctx = confettiCanvas.getContext("2d");
+
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+
+        window.addEventListener("resize", function () {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        });
+
+        const confettiConfig = {
+            particleCount: 200,
+            spread: 90,
+            origin: { y: 0.6 },
+            colors: [
+                '#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF', '#F172A1',
+                '#A1C7E0', '#D8A7B1', '#B983FF', '#9DE0AD', '#FF9671',
+                '#7B1FA2', '#4A148C', '#FFAB40', '#69F0AE', '#E040FB'
+            ]
+        };
+
+        class Confetti {
+            constructor() {
+                this.particles = [];
+                this.running = false;
+            }
+
+            createParticles() {
+                const { particleCount, colors, spread } = confettiConfig;
+
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * confettiCanvas.width,
+                        y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        size: Math.random() * 12 + 5,
+                        speed: Math.random() * 4 + 2,
+                        angle: Math.random() * 60 - 30,
+                        rotation: Math.random() * 360,
+                        rotationSpeed: Math.random() * 20 - 10
+                    });
+                }
+            }
+
+            update() {
+                ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+                let stillAlive = false;
+
+                for (let i = 0; i < this.particles.length; i++) {
+                    const p = this.particles[i];
+
+                    p.y += p.speed;
+                    p.x += Math.sin(p.angle * Math.PI / 180) * 3;
+                    p.rotation += p.rotationSpeed;
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+
+                    if (i % 3 === 0) {
+                        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    } else if (i % 3 === 1) {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else {
+                        ctx.beginPath();
+                        ctx.moveTo(0, -p.size / 2);
+                        ctx.lineTo(p.size / 2, p.size / 2);
+                        ctx.lineTo(-p.size / 2, p.size / 2);
+                        ctx.closePath();
+                        ctx.fill();
+                    }
+
+                    ctx.restore();
+
+                    if (p.y < confettiCanvas.height + p.size) {
+                        stillAlive = true;
+                    }
+                }
+
+                if (stillAlive && this.running) {
+                    requestAnimationFrame(this.update.bind(this));
+                } else {
+                    this.running = false;
+                    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                }
+            }
+
+            start() {
+                if (!this.running) {
+                    this.particles = [];
+                    this.running = true;
+                    this.createParticles();
+                    this.update();
+                }
+            }
+        }
+
+        const confetti = new Confetti();
+
+        const rewardDetails = {
+            "⭐ 10 Points": {
+                description: "A fantastic prize that will make your day better!"
+            },
+            "🚀 Boost": {
+                description: "Lucky you! This reward is one of our favorites."
+            },
+            "🏅 Motivational Badge": {
+                description: "An amazing reward that few people get to win!"
+            },
+            "⚡ Double XP Boost": {
+                description: "This special reward is yours to enjoy. Congratulations!"
+            },
+            "🔥 3-Day Power Boost": {
+                description: "A premium reward for a lucky spinner like you!"
+            },
+            "👑 Golden Streak Crown": {
+                description: "The grand prize! You've won our best reward."
+            }
+        };
+
+        const rotationValues = [
+            { minDegree: 0, maxDegree: 30, value: "🚀 Boost" },
+            { minDegree: 31, maxDegree: 90, value: "⭐ 10 Points" },
+            { minDegree: 91, maxDegree: 150, value: "👑 Golden Streak Crown" },
+            { minDegree: 151, maxDegree: 210, value: "🔥 3-Day Power Boost" },
+            { minDegree: 211, maxDegree: 270, value: "⚡ Double XP Boost" },
+            { minDegree: 271, maxDegree: 330, value: "🏅 Motivational Badge" },
+            { minDegree: 331, maxDegree: 360, value: "🚀 Boost" },
+        ];
+
+        const data = [16, 16, 16, 16, 16, 16];
+
+        const pieColors = [
+            "#1f4e7b",
+            "#14324a",
+            "#1f4e7b",
+            "#14324a",
+            "#1f4e7b",
+            "#14324a",
+        ];
+
+        let myChart = new Chart(wheel, {
+            plugins: [ChartDataLabels],
+            type: "pie",
+            data: {
+                labels: ["1", "2", "3", "4", "5", "6"],
+                datasets: [
+                    {
+                        backgroundColor: pieColors,
+                        data: data,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                animation: { duration: 0 },
+                plugins: {
+                    tooltip: false,
+                    legend: {
+                        display: false,
+                    },
+                    datalabels: {
+                        color: "#ffffff",
+                        formatter: (_, context) =>
+                            context.chart.data.labels[context.dataIndex],
+                        font: { size: 24 },
+                        textShadowBlur: 5,
+                        textShadowColor: '#000'
+                    },
+                },
+            },
+        });
+
+        
+        const valueGenerator = (angleValue) => {
+            for (let i of rotationValues) {
+                if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
+                    return i.value;
+                }
+            }
+            return null;
+        };
+
+        
+        let isSpinning = false;
+        let currentRotation = 0;
+
+        spinBtn.addEventListener("click", () => {
+            if (isSpinning) return;
+            isSpinning = true;
+            finalValue.textContent = "Spinning...";
+            const spins = Math.floor(Math.random() * 3) + 4; 
+            const randomDegree = Math.floor(Math.random() * 360);
+            const totalDegree = spins * 360 + randomDegree;
+            const duration = 4000;
+
+            
+            let start = null;
+            function animate(timestamp) {
+                if (!start) start = timestamp;
+                const elapsed = timestamp - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                currentRotation = easeOut * totalDegree;
+                wheel.style.transform = `rotate(${currentRotation}deg)`;
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    const normalizedDegree = currentRotation % 360;
+                    const reward = valueGenerator(normalizedDegree);
+                    finalValue.textContent = `You won: ${reward}`;
+                    showPopup(reward);
+                    isSpinning = false;
+                }
+            }
+            requestAnimationFrame(animate);
+        });
+
+        
+        function showPopup(reward) {
+            popupReward.textContent = reward;
+            popupDescription.textContent = rewardDetails[reward]?.description || "";
+            popup.classList.add("active");
+            confetti.start();
+        }
+
+        
+        popupClose.addEventListener("click", () => {
+            popup.classList.remove("active");
+        });
+        claimButton.addEventListener("click", () => {
+            alert("Reward claimed! Thank you.");
+            popup.classList.remove("active");
+        });
+
+    </script>
+</body>
+
+</html>
