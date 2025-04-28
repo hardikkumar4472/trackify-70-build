@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Satoshi:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="shortcut icon" href="../MainPage/static/TrackifylogoNobackground.png" type="image/x-icon">
+    <link rel=stylesheet href="Style.css">
 </head>
 <body class="bg-gray-600">
     <div id="about" class="bg-gray-900 animate__animated animate__fadeIn">
